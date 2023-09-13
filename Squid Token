@@ -1,0 +1,18 @@
+Getting Started
+Install the latest version of the SDK:
+npm install @thirdweb-dev/sdk ethers@5
+
+Initialize the SDK and contract on your project:
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+
+// If used on the FRONTEND pass your 'clientId'
+const sdk = new ThirdwebSDK("goerli", {
+  clientId: "YOUR_CLIENT_ID",
+});
+// --- OR ---
+// If used on the BACKEND pass your 'secretKey'
+const sdk = new ThirdwebSDK("goerli", {
+  secretKey: "YOUR_SECRET_KEY",
+});
+
+const contract = await sdk.getContract("0x7c637f34b9B773dC97E0a145F32a42F4696EfDa7");
