@@ -1,0 +1,88 @@
+Mint tokens to many wallets
+
+// Data of the tokens you want to mint
+const data = [
+  {
+    toAddress: "0x159d3a03Dc8aaBaf6a083C1996a7B2E8f0aEeeD0", // Address to mint tokens to
+    amount: 0.2, // How many tokens to mint to specified address
+  },
+ {
+   toAddress: "0x...",
+   amount: 1.4,
+ }
+]
+
+await contract.mintBatchTo(data);
+Extension detected
+EXTENSION
+
+ERC20Burnable
+
+Burn tokens
+
+// The amount of this token you want to burn
+const amount = 1.2;
+
+await contract.erc20.burn(amount);
+
+Burn tokens from a specific wallet
+
+// Address of the wallet sending the tokens
+const holderAddress = "0x159d3a03Dc8aaBaf6a083C1996a7B2E8f0aEeeD0";
+
+// The amount of this token you want to burn
+const amount = 1.2;
+
+await contract.erc20.burnFrom(holderAddress, amount);
+Extension detected
+EXTENSION
+
+ERC20Mintable
+
+Mint tokens
+
+const amount = "1.5"; // The amount of this token you want to mint
+await contract.erc20.mint(amount);
+
+Mint tokens to a specific wallet
+
+const toAddress = "0x159d3a03Dc8aaBaf6a083C1996a7B2E8f0aEeeD0"; // Address of the wallet you want to mint the tokens to
+const amount = "1.5"; // The amount of this token you want to mint
+await contract.erc20.mintTo(toAddress, amount);
+Extension detected
+EXTENSION
+
+ERC20SignatureMintable
+
+Mint with signature
+
+// see how to craft a payload to sign in the `contract.erc20.signature.generate()` documentation
+const signedPayload = contract.erc20.signature().generate(payload);
+
+// now the payload can be used to mint tokens
+const tx = contract.erc20.signature.mint(signedPayload);
+
+Mint tokens from a signature
+
+// see how to craft a payload to sign in the `generate()` documentation
+const signedPayload = contract.erc20.signature.generate(payload);
+
+// Use the signed payload to mint the tokens
+const tx = contract.erc20.signature.mint(signedPayload);
+
+Generate a signature that can be used to mint a certain amount of tokens
+
+const startTime = new Date();
+const endTime = new Date(Date.now() + 60 * 60 * 24 * 1000);
+const payload = {
+  quantity: 4.2, // The quantity of tokens to be minted
+  to: 0x159d3a03Dc8aaBaf6a083C1996a7B2E8f0aEeeD0, // Who will receive the tokens
+  price: 0.5, // the price to pay for minting those tokens
+  currencyAddress: NATIVE_TOKEN_ADDRESS, // the currency to pay with
+  mintStartTime: startTime, // can mint anytime from now
+  mintEndTime: endTime, // to 24h from now,
+  primarySaleRecipient: "0x...", // custom sale recipient for this token mint
+};
+
+const signedPayload = await contract.erc20.signature.generate(payload);
+// now anyone can use these to mint the NFT using `contract.erc20.signature.mint(signedPayload)`
