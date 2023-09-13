@@ -1,0 +1,7 @@
+Set the primary sale recipient
+
+await contract.sales.setRecipient(recipientWalletAddress);
+
+Get the primary sale recipient
+
+const salesRecipient = await contract.sales.getRecipient();
