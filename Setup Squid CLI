@@ -1,0 +1,67 @@
+1. To create a new Next.js project, you can use the following command:
+
+npx create-next-app my-airdrop-dapp
+​
+
+This will create a new Next.js project in the directory `my-airdrop-dapp`.
+2. The necessary dependencies for this project include:
+
+web3
+@oceanprotocol/squid
+​
+
+You can install these dependencies using the following command:
+
+npm install web3 @oceanprotocol/squid
+​
+
+3. The smart contract for the airdrop can be created using the following code:
+
+pragma solidity ^0.8.0;
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+contract Airdrop is ERC20 {
+    constructor(uint256 initialSupply) ERC20("Airdrop Token", "ADT") {
+        _mint(msg.sender, initialSupply);
+    }
+    function airdrop(address[] calldata recipients, uint256 amount) public {
+        for (uint256 i = 0; i < recipients.length; i++) {
+            _transfer(msg.sender, recipients[i], amount);
+        }
+    }
+}
+​
+
+This smart contract creates an ERC20 token called "Airdrop Token" with the symbol "ADT". The constructor mints the initial supply of tokens to the deployer's address. The `airdrop` function allows the deployer to airdrop tokens to a list of recipients.
+4. The smart contract can be deployed to the blockchain using the following command:
+
+truffle migrate
+​
+
+This command will compile the smart contract and deploy it to the blockchain.
+5. A web3 provider can be created using the following code:
+
+const web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+​
+
+This code creates a web3 provider that connects to the blockchain on port 8545.
+6. The web3 provider can be connected to the smart contract using the following code:
+
+const contract = new web3.eth.Contract(abi, address);
+​
+
+This code creates a contract object that can be used to interact with the smart contract. The `abi` parameter is the ABI of the smart contract, and the `address` parameter is the address of the smart contract.
+ 
+7. The smart contract can be used to airdrop tokens to a list of recipients using the following code:
+
+const recipients = ["0x1234567890123456789012345678901234567890", "0x9876543210987654321098765432109876543210"];
+const amount = 100;
+contract.methods.airdrop(recipients, amount).send({from: "0x0000000000000000000000000000000000000000"});
+​
+
+This code calls the `airdrop` function of the smart contract, passing in the list of recipients and the amount of tokens to airdrop. The `send` function sends the transaction to the blockchain.
+8. The airdrop can be verified by checking the balances of the recipients. The following code can be used to check the balance of a recipient:
+
+const balance = await contract.methods.balanceOf("0x1234567890123456789012345678901234567890").call();
+​
+
+This code calls the `balanceOf` function of the smart contract, passing in the address of the recipient. The `call` function returns the balance of the recipient.
