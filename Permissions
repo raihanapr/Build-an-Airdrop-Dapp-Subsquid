@@ -1,0 +1,25 @@
+Grant a role to a specific address
+
+await contract.roles.grant("minter", "0x159d3a03Dc8aaBaf6a083C1996a7B2E8f0aEeeD0");
+
+Revoke a role from a specific address
+
+await contract.roles.revoke("minter", "0x159d3a03Dc8aaBaf6a083C1996a7B2E8f0aEeeD0");
+
+Overwrite the list of members for specific roles
+
+const minterAddresses = await contract.roles.get("minter");
+await contract.roles.setAll({
+ minter: []
+});
+console.log(await contract.roles.get("minter")); // No matter what members had the role before, the new list will be set to []
+
+Get all members of a specific role
+
+const minterAddresses = await contract.roles.get("minter");
+
+PermissionsEnumerable
+
+Get all members of all roles
+
+const rolesAndMembers = await contract.roles.getAll();
